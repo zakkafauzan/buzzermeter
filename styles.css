@@ -109,7 +109,7 @@ body {
 	--needle-rotation: -90deg; /* default at 0 */
 	position: absolute;
 	left: 50%;
-	bottom: 0;
+	bottom: 12px; /* align pivot with hub center (hub radius = 12px) */
 	width: 10px; /* thicker */
 	height: 150px;
 	transform-origin: 50% 100%;
@@ -121,7 +121,7 @@ body {
 	content: "";
 	position: absolute;
 	left: 50%;
-	bottom: 14px; /* leave room for counterweight */
+	bottom: 12px; /* start just above hub */
 	transform: translateX(-50%);
 	width: 10px;
 	height: 120px;
@@ -136,7 +136,7 @@ body {
 	content: "";
 	position: absolute;
 	left: 50%;
-	bottom: -10px;
+	bottom: 3px; /* center counterweight within hub (hub center at 12px, radius 9px) */
 	transform: translateX(-50%);
 	width: 18px;
 	height: 18px;
@@ -153,11 +153,11 @@ body {
 	transform: translate(-50%, 0);
 	width: 24px;
 	height: 24px;
-	background: radial-gradient(circle at 40% 40%, #ffffff, var(--hub) 60%, #9aa3ad 100%);
+	background: transparent; /* remove white hub */
 	border-radius: 50%;
 	z-index: 2;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-	border: 2px solid #2a3040;
+	box-shadow: none;
+	border: none;
 }
 
 

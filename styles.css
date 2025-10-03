@@ -1,0 +1,223 @@
+/* Base layout */
+:root {
+	--bg: #0f1115;
+	--panel: #161a22;
+	--text: #e6e6e6;
+	--muted: #a0a7b3;
+	--accent: #4f8cff;
+	--danger: #ff4f64;
+	--needle: #ff5c75;
+	--needle-shadow: rgba(255, 92, 117, 0.5);
+	--hub: #e6e6e6;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+	margin: 0;
+	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+	background: var(--bg);
+	color: var(--text);
+}
+
+.container {
+	max-width: 900px;
+	margin: 40px auto;
+	padding: 0 16px;
+}
+
+.app-title { margin: 0 0 24px; font-size: 32px; letter-spacing: 0.5px; }
+
+/* Controls */
+.controls {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 12px;
+	align-items: center;
+	background: var(--panel);
+	padding: 16px;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.account-input {
+	width: 100%;
+	padding: 12px 14px;
+	border-radius: 10px;
+	border: 1px solid #2a3040;
+	background: #0e121a;
+	color: var(--text);
+	outline: none;
+}
+.account-input::placeholder { color: var(--muted); }
+
+.measure-button {
+	padding: 12px 18px;
+	border-radius: 10px;
+	border: 1px solid #2a3040;
+	background: var(--accent);
+	color: white;
+	cursor: pointer;
+	font-weight: 600;
+}
+.measure-button:hover { filter: brightness(1.05); }
+.measure-button:active { transform: translateY(1px); }
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
+
+/* Gauge */
+.gauge-section { margin-top: 28px; text-align: center; }
+
+.gauge {
+	position: relative;
+	width: 320px;
+	height: 160px; /* half of width */
+	margin: 24px auto 10px;
+	overflow: hidden; /* show only the top half */
+	border-top-left-radius: 320px;
+	border-top-right-radius: 320px;
+	border: 2px solid #2a3040;
+	border-bottom: none;
+	background: var(--panel);
+}
+
+.gauge-dial {
+	position: absolute;
+	left: 50%;
+	bottom: -160px; /* position full circle so only top half shows */
+	width: 320px;
+	height: 320px;
+	transform: translateX(-50%);
+	border-radius: 50%;
+	background: conic-gradient(from -90deg, #3fb950 0deg, #e3b341 90deg, #ff4f64 180deg);
+	box-shadow: inset 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* Clock-like needle */
+.gauge-needle {
+	--needle-rotation: -90deg; /* default at 0 */
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: 10px; /* thicker */
+	height: 150px;
+	transform-origin: 50% 100%;
+	transform: translateX(-50%) rotate(var(--needle-rotation));
+	z-index: 1;
+}
+
+.gauge-needle::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 14px; /* leave room for counterweight */
+	transform: translateX(-50%);
+	width: 10px;
+	height: 120px;
+	background: linear-gradient(to top, #ff364f, var(--needle));
+	clip-path: polygon(50% 0%, 100% 20%, 70% 100%, 30% 100%, 0% 20%);
+	border-radius: 4px;
+	box-shadow: 0 2px 8px var(--needle-shadow);
+}
+
+/* Counterweight */
+.gauge-needle::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: -10px;
+	transform: translateX(-50%);
+	width: 18px;
+	height: 18px;
+	background: radial-gradient(circle at 40% 40%, #ff7488, #c21f3a 70%);
+	border-radius: 50%;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+/* Central hub */
+.gauge-hub {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, 0);
+	width: 24px;
+	height: 24px;
+	background: radial-gradient(circle at 40% 40%, #ffffff, var(--hub) 60%, #9aa3ad 100%);
+	border-radius: 50%;
+	z-index: 2;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+	border: 2px solid #2a3040;
+}
+
+
+/* Scale numbers around arc */
+.gauge-scale {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+	width: 320px;
+	height: 160px;
+	pointer-events: none;
+}
+
+.gauge-scale span {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform-origin: 0 0;
+	color: var(--text);
+	font-size: 13px;
+	font-weight: 700;
+	/* place each label using its own --angle */
+	transform: rotate(var(--angle)) translateY(-140px) rotate(calc(-1 * var(--angle))) translate(-50%, 50%);
+}
+
+/* angles from -90deg (left) to 90deg (right) */
+.gauge-scale span:nth-child(1) { --angle: -90deg; }
+.gauge-scale span:nth-child(2) { --angle: -72deg; }
+.gauge-scale span:nth-child(3) { --angle: -54deg; }
+.gauge-scale span:nth-child(4) { --angle: -36deg; }
+.gauge-scale span:nth-child(5) { --angle: -18deg; }
+.gauge-scale span:nth-child(6) { --angle: 0deg; }
+.gauge-scale span:nth-child(7) { --angle: 18deg; }
+.gauge-scale span:nth-child(8) { --angle: 36deg; }
+.gauge-scale span:nth-child(9) { --angle: 54deg; }
+.gauge-scale span:nth-child(10) { --angle: 72deg; }
+.gauge-scale span:nth-child(11) { --angle: 90deg; }
+
+.gauge-legend { color: var(--muted); margin: 8px 0 0; font-size: 14px; }
+
+/* Explanation */
+.explanation-section {
+	margin-top: 24px;
+	background: var(--panel);
+	padding: 16px;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.explanation-label { display: block; margin-bottom: 8px; color: var(--muted); }
+
+.explanation-textarea {
+	width: 100%;
+	min-height: 180px;
+	resize: vertical;
+	padding: 12px 14px;
+	border-radius: 10px;
+	border: 1px solid #2a3040;
+	background: #0e121a;
+	color: var(--text);
+	outline: none;
+}

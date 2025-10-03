@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>BuzzeRp Meter</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<main class="container">
+		<h1 class="app-title">BuzzeRp Meter</h1>
+
+		<section class="controls" aria-label="Account input and measure control">
+			<label class="visually-hidden" for="accountInput">Twitter account</label>
+			<input id="accountInput" class="account-input" type="text" placeholder="please write the account you want to measure, e.g., @elonmusk" />
+			<button class="measure-button" type="button" aria-label="Measure account">Measure!</button>
+		</section>
+
+		<section class="gauge-section" aria-label="BuzzeRp gauge">
+			<div class="gauge" role="img" aria-label="Gauge from 0 to 10">
+				<div class="gauge-dial"></div>
+				<div class="gauge-needle" style="--needle-rotation: -90deg"></div>
+				<div class="gauge-hub" aria-hidden="true"></div>
+				<div class="gauge-scale" aria-hidden="true">
+					<span>0</span>
+					<span>1</span>
+					<span>2</span>
+					<span>3</span>
+					<span>4</span>
+					<span>5</span>
+					<span>6</span>
+					<span>7</span>
+					<span>8</span>
+					<span>9</span>
+					<span>10</span>
+				</div>
+			</div>
+			<p class="gauge-legend">0 = dislikes current government • 10 = sycophant of government</p>
+		</section>
+
+		<section class="explanation-section">
+			<label class="explanation-label" for="explanation">Explanation</label>
+			<textarea id="explanation" class="explanation-textarea" rows="8" placeholder="Explain why this account deserves the score above..."></textarea>
+		</section>
+	</main>
+</body>
+</html>
